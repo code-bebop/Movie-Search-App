@@ -6,6 +6,7 @@ import MovieListItem from "./MovieListItem";
 const MovieListBlock = styled.ul``;
 
 const MovieList = ({ items }) => {
+  console.log("무비리스트 렌더링");
   return (
     <MovieListBlock>
       {items.map(
@@ -25,4 +26,4 @@ const MovieList = ({ items }) => {
   );
 };
 
-export default MovieList;
+export default React.memo(MovieList);

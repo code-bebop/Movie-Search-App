@@ -15,8 +15,11 @@ const MovieListItem = ({
 }) => {
   return (
     <MovieListItemBlock>
-      <img src={image} alt="날씨의 아이" />
-      <h3>{title}</h3>
+      <img
+        src={image}
+        alt={title.replace(/<b>/gi, "").replace(/<\/b>/gi, "")}
+      />
+      <h3>{title.replace(/<b>/gi, "").replace(/<\/b>/gi, "")}</h3>
       <dl>
         <dt>평점</dt>
         <dd>{userRating}</dd>
