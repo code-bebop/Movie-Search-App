@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
 import MovieList from "./components/MovieList";
@@ -33,21 +33,22 @@ const App = () => {
   const [items, setItems] = useState(null);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [display, setDisplay] = useState(10);
 
   const getData = useCallback(
     async (e) => {
-      e.preventDefault();
-
+      if (e) {
+        e.preventDefault();
+      }
       if (query === "") {
         alert("검색어를 입력해주십시오.");
         return;
       }
-
       try {
         setLoading(true);
         const {
           data: { items: data },
-        } = await getMovieList(query);
+        } = await getMovieList(query, display);
         setItems(data);
         setLoading(false);
       } catch (e) {
@@ -55,12 +56,57 @@ const App = () => {
         setLoading(false);
       }
     },
-    [query]
+    [query, display]
   );
 
   const onInputChange = (e) => {
     setQuery(e.target.value);
   };
+
+  const getDocumentHeight = () => {
+    const body = document.body;
+    const html = document.documentElement;
+
+    return Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+  };
+
+  const getScrollTop = () => {
+    return window.pageYOffset !== undefined
+      ? window.pageYOffset
+      : (document.documentElement || document.body.parentNode || document.body)
+          .scrollTop;
+  };
+
+  useEffect(() => {
+    const scrollHandler = () => {
+      // console.log(`문서 높이: ${getDocumentHeight()}`);
+      // console.log(`스크롤 된 높이: ${getScrollTop()}`);
+      // console.log(
+      //   `무한 스크롤 트리거: ${
+      //     getScrollTop() >= getDocumentHeight() - window.innerHeight
+      //   }`
+      // );
+      if (getScrollTop() >= getDocumentHeight() - window.innerHeight) {
+        console.log(`스크롤 트리거 ON, items.length: ${items.length}`);
+        const nextDisplay = items.length + 10;
+        setDisplay(nextDisplay);
+        console.log(`setDisplay 작동, display: ${display}`);
+        getData();
+      }
+    };
+
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, [items, getData, display]);
 
   return (
     <Wrapper>
@@ -68,12 +114,10 @@ const App = () => {
         <input onChange={onInputChange} value={query} />
         <button type="submit">검색</button>
       </SearchMovieForm>
-      {!loading && items ? (
+      {items ? (
         <MovieList items={items} />
-      ) : !items ? (
-        <MovieMessage>검색을 해 주십시오</MovieMessage>
       ) : (
-        <MovieMessage>로딩 중 . . .</MovieMessage>
+        <MovieMessage>검색을 해 주십시오</MovieMessage>
       )}
     </Wrapper>
   );

@@ -3,10 +3,19 @@ import styled from "styled-components";
 
 import MovieListItem from "./MovieListItem";
 
-const MovieListBlock = styled.ul``;
+const MovieListBlock = styled.ul`
+  padding: 57px 0;
+`;
+const ErrorMessage = styled.p`
+  color: #fff;
+  font-size: 3rem;
+`;
 
 const MovieList = ({ items }) => {
-  console.log("무비리스트 렌더링");
+  console.log(items);
+  if (items.length === 0) {
+    return <ErrorMessage>검색 결과가 없습니다.</ErrorMessage>;
+  }
   return (
     <MovieListBlock>
       {items.map(

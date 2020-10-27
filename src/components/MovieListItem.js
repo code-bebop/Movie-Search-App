@@ -6,7 +6,7 @@ const MovieListItemBlock = styled.li`
   background-color: rgba(0, 0, 0, 0.4);
   width: 1196px;
   height: 450px;
-  margin-top: 86px;
+  margin-top: 41px;
   padding: 45px 45px;
   & .Wrapper {
     position: relative;
