@@ -4,7 +4,7 @@ import styled from "styled-components";
 const MovieListItemBlock = styled.li`
   color: #fff;
   background-color: rgba(0, 0, 0, 0.4);
-  width: 1196px;
+  width: 100%;
   height: 450px;
   margin-top: 41px;
   padding: 45px 45px;

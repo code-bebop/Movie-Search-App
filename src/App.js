@@ -5,7 +5,16 @@ import MovieList from "./components/MovieList";
 import { getMovieList } from "./lib/api/Movie";
 
 const Wrapper = styled.div`
-  padding: 0 361px;
+  width: 1024px;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    width: 768px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const SearchMovieForm = styled.form`
@@ -44,12 +53,15 @@ const App = () => {
         alert("검색어를 입력해주십시오.");
         return;
       }
+
       try {
         setLoading(true);
         const {
           data: { items: data },
         } = await getMovieList(query, display);
         setItems(data);
+        setDisplay(display + 10);
+        console.log(display);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -85,19 +97,15 @@ const App = () => {
 
   useEffect(() => {
     const scrollHandler = () => {
-      // console.log(`문서 높이: ${getDocumentHeight()}`);
-      // console.log(`스크롤 된 높이: ${getScrollTop()}`);
-      // console.log(
-      //   `무한 스크롤 트리거: ${
-      //     getScrollTop() >= getDocumentHeight() - window.innerHeight
-      //   }`
-      // );
-      if (getScrollTop() >= getDocumentHeight() - window.innerHeight) {
-        console.log(`스크롤 트리거 ON, items.length: ${items.length}`);
-        const nextDisplay = items.length + 10;
-        setDisplay(nextDisplay);
-        console.log(`setDisplay 작동, display: ${display}`);
-        getData();
+      if (items) {
+        if (getScrollTop() >= getDocumentHeight() - window.innerHeight) {
+          // console.log(`스크롤 트리거 ON, items.length: ${items.length}`);
+          // const nextDisplay = items.length + 10;
+          // console.log(`nextDisplay: ${nextDisplay}`);
+          // setDisplay(nextDisplay);
+          // console.log(`setDisplay 작동, display: ${display}`);
+          getData();
+        }
       }
     };
 
