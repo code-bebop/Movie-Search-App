@@ -42,6 +42,7 @@
   },
   "proxy": "https://openapi.naver.com",
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "typescript": "^4.0.5"
   }
 }
