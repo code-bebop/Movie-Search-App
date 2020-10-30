@@ -48,3 +48,8 @@ if (getScrollTop() >= getDocumentHeight() - window.innerHeight) {
 }
 ```
 이렇게 구성하는 것 만으로도 크로스 브라우징 외 여러가지 이슈를 피할 수 있었다.
+
+## TypeScript
+TypeScript에 대해 개념은 알고 있었으나 사용해본 적이 없어 한 번 적용해보았다.
+type을 제한하는 것에 대한 코드를 적용하는 것은 금방 했으나, tsconfig 설정과 compile에 필요한 라이브러리등을 찾아 받는 것이 오래걸렸다. CRA를 할 때에 typescript 옵션을 사용하면 뚝딱이지만, 처음에 TypeScript를 사용할 계획이 없었기 때문에 직접 설정하는 게 힘들었다.
+또한 개발환경 설정에 대한 부분은 하다보면 금방 익숙해질 것이라 생각했다.
